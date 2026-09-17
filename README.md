@@ -57,6 +57,57 @@ git clone git@github.com:defeedback/interview-coach.git \
 | 看漏洞 | 按四类失败类型分类记录 |
 | 生成简历 | 只从已验证的 OWNED/CONTRIBUTED 内容抽取 |
 
+## 在其他智能体中使用
+
+本 skill 采用通用的 `SKILL.md` + YAML frontmatter 格式，核心字段（`name` / `description`）被主流智能体共同识别，可直接复用到以下产品。仓库已托管在 GitHub：
+
+```bash
+git clone https://github.com/defeedback/interview-coach.git
+```
+
+克隆后把 `interview-coach/` 目录整体复制到对应智能体的技能目录下即可。
+
+### WorkBuddy
+```bash
+git clone https://github.com/defeedback/interview-coach.git \
+  "$HOME/.workbuddy/skills/interview-coach"
+```
+
+### Claude Code
+技能放在项目级或用户级 `.claude/skills/` 下（目录结构与本仓库一致）：
+```bash
+# 用户级（所有项目可用）
+cp -r interview-coach "$HOME/.claude/skills/interview-coach"
+# 或项目级
+cp -r interview-coach .claude/skills/interview-coach
+```
+会话中输入 `/interview-coach` 直接调用，或当描述匹配时由 Claude 自动触发。也可打包为 Plugin（`.claude-plugin/plugin.json` + `skills/`）共享给团队。
+
+### OpenCode
+原生搜索 `.opencode/skills/`，同时兼容 `.claude/skills/` 与 `.agents/skills/`：
+```bash
+# 全局
+cp -r interview-coach "$HOME/.config/opencode/skills/interview-coach"
+# 或项目级
+cp -r interview-coach .opencode/skills/interview-coach
+```
+可选：在 `SKILL.md` 的 frontmatter 增加 `compatibility: opencode` 字段。Agent 通过原生 `skill` 工具按需加载。
+
+### OpenClaw
+OpenClaw 支持从 Git 仓库直接安装（也支持 ClawHub 市场）：
+```bash
+# 安装到当前工作区
+openclaw skills install git:defeedback/interview-coach@main
+# 安装到所有本地 agent（共享目录 ~/.openclaw/skills）
+openclaw skills install git:defeedback/interview-coach@main --global
+```
+或手动把目录放入工作区 `/skills` 或 `~/.openclaw/skills` 后重启会话。
+
+### 其他遵循 Open Agent Skills 规范的产品
+本 skill 符合 [Open Agent Skills](https://openagentskills.dev) 约定（`SKILL.md` + `name`/`description` frontmatter）。任何识别该规范、在 `.claude/skills/`、`.opencode/skills/`、`.agents/skills/` 等路径下发现 `SKILL.md` 的智能体，都可直接加载。
+
+> 说明：核心规则与流程已内联在 `SKILL.md`；`references/` 为补充细节，支持资源加载的智能体可一并保留，不支持的仅用 `SKILL.md` 亦完整可用。
+
 ## License
 
 MIT © defeed
