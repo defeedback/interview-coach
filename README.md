@@ -37,7 +37,7 @@ interview-coach/
 
 ```bash
 # 方式一：直接克隆到 WorkBuddy 用户级技能目录
-git clone git@github.com:defeed/interview-coach.git \
+git clone git@github.com:defeedback/interview-coach.git \
   "$HOME/.workbuddy/skills/interview-coach"
 
 # 方式二：下载 zip 解压到 ~/.workbuddy/skills/interview-coach/
